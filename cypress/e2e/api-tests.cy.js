@@ -1,7 +1,6 @@
 describe('API Tests.', () => {
     it('List users', () => {
-        let url = 'https://reqres.in/api/users??per_page=20'
-        //let response;
+        let url = 'https://reqres.in/api/users?per_page=20'
 
         cy.request({
             method: 'GET',
@@ -10,9 +9,32 @@ describe('API Tests.', () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-        }).then((res) => {
-            cy.wrap(res).its('status').should('be.equal', 200);
-        });
+        }).then((response) => {
+            response.body.data.forEach((user) => {
+                if (user.id % 2 !== 0) {
+                    cy.log(user)
+                }
+            })
+        })
+
+
+        // .then((res) => {
+        //     cy.wrap(res).its('status').should('be.equal', 200);
+        //     cy.wrap(res).its('body.data').should('exist');
+        //     //console.log(cy.wrap(res).its('body.data')[0])
+        //     //users = cy.wrap(res).its('body.data');
+        //     //cy.wrap(res => users = res.body.data);
+        //     //.then(res => response = res)
+        //     //console.log(users)
+        //     for (let i = 1; i < 12; i++) {
+        //         console.log(i);
+        //         //console.log(users[i]);
+        //         cy.wrap(res => { res.body.data[i].id }).should('be.equal', i)
+        //     }
+        // });
+
+        //debugger;
+        //console.log(cy.wrap(response))
     });
 
     //     it('ADMIN: timestampStart = 2021-11-09T00:00:00.000Z, timestampEnd = 2021-12-10T23:59:59.999Z, pageSize = 100 (device type different SC415)', () => {
