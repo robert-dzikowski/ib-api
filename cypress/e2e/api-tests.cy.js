@@ -42,6 +42,28 @@ describe('API Tests.', () => {
         })
     });
 
+    it('Upadte user', () => {
+        let url = `${Cypress.config().baseUrl}` + '/user/777'
+        const email = "tester777@dummy.com";
+        const pass = "myPass"
+        cy.request({
+            method: 'PATCH',
+            url: url,
+            failOnStatusCode: false,
+            body: {
+                "email": email,
+                "password": pass
+            },
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((resp) => {
+            cy.wrap(resp).its('status').should('be.equal', 200);
+            cy.wrap(resp.body.email).should('be.equal', email);
+            cy.wrap(resp.body.password).should('be.equal', pass);
+        })
+    });
+
     //     it('ADMIN: timestampStart = 2021-11-09T00:00:00.000Z, timestampEnd = 2021-12-10T23:59:59.999Z, pageSize = 100 (device type different SC415)', () => {
     //         const timestampStart = '2021-11-09T00:00:00.000Z';
     //         const timestampEnd = '2021-12-10T23:59:59.999Z';
