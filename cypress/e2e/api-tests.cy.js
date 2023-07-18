@@ -1,6 +1,6 @@
 describe('API Tests.', () => {
     it('List users', () => {
-        let url = 'https://reqres.in/api/users?per_page=20'
+        let url = `${Cypress.config().baseUrl}` + '/users?per_page=20'
 
         cy.request({
             method: 'GET',
@@ -10,12 +10,35 @@ describe('API Tests.', () => {
                 'Content-Type': 'application/json',
             },
         }).then((response) => {
+            cy.wrap(response).its('status').should('be.equal', 200);
             cy.task('log', 'Users with odd id:');
             response.body.data.forEach((user) => {
                 if (user.id % 2 !== 0) {
                     cy.task('log', JSON.stringify(user));
                 }
             })
+        })
+    });
+
+    it('Create user', () => {
+        let url = `${Cypress.config().baseUrl}` + '/users'
+        cy.request({
+            method: 'POST',
+            url: url,
+            failOnStatusCode: false,
+            body: {
+                "email": "tester@dummy.com",
+                "password": "mypass"
+            },
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).then((resp) => {
+            cy.wrap(resp).its('status').should('be.equal', 201);
+            const respDate = resp.body.createdAt.substring(0, 10);
+            //console.log(respDate); // 2023-07-18
+            let currentDate = new Date().toJSON().slice(0, 10);
+            cy.wrap(respDate).should('be.equal', currentDate);
         })
     });
 
