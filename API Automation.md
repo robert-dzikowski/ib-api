@@ -46,6 +46,6 @@
   - Get a list of users passing a delay query parameter with the provided value for the validation
   - Validate that the response time is no longer than `1` second
 
-### Validation 5:
+(### Validation 5:
   - Use whatever asynchronous technique you prefer to get `10` single users
-  - Validate, asynchronously as well, that all response codes are `200s`
+  - Validate, asynchronously as well, that all response codes are `200s`)
