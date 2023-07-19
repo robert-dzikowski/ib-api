@@ -8,6 +8,10 @@ Set env. variable so cosole log output is printed:
 
 `set ELECTRON_ENABLE_LOGGING=1`
 
+In Linux:
+
+`export ELECTRON_ENABLE_LOGGING=1`
+
 To run tests in CLI:
 
 `node_modules\.bin\cypress run`
